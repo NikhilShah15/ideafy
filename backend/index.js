@@ -2,14 +2,15 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import connectDB from "./config/db.js";
-import authRoute from './routes/auth.js'
+import authRoute from './routes/auth.js';
+
 dotenv.config();
-connectDB()
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api/auth',authRoute)
+app.use('/api/auth', authRoute);
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post("/api/validate-startup", async (req, res) => {
@@ -28,7 +29,7 @@ app.post("/api/validate-startup", async (req, res) => {
     } = req.body;
 
     const prompt = `
-YYou are an expert startup analyst. 
+You are an expert startup analyst. 
 Generate a complete startup evaluation report in JSON format only. 
 Follow the schema exactly. Do not include any explanation outside the JSON.
 
@@ -103,8 +104,6 @@ Schema:
 }
 
 Return only valid JSON.
-
-
 `;
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -126,4 +125,3 @@ Return only valid JSON.
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-  
