@@ -1,4 +1,10 @@
-"scripts": {
-  "start": "node index.js",
-  "build": "echo no_build"
+{
+  "name": "ideafy",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo no_build"
+  },
+  "dependencies": {
+  }
 }
